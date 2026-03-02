@@ -1,0 +1,13 @@
+key.json
+*/key.json
+.env
+key.json
+.env
+key.json
+*.pem
+*credentials*
+*service_account*
+__pycache__/
+*.pyc
+.env
+key.json
