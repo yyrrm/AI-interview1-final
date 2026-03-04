@@ -12,7 +12,7 @@ coords_buffer = deque(maxlen=5)
 important_joints = list(range(33))
 
 cap = cv2.VideoCapture(0)
-print("🎥 실시간 움직임 분석 시작 (종료: Q 키)")
+print("실시간 움직임 분석 시작 (종료: Q 키)")
 
 while cap.isOpened():
     ret, frame = cap.read()

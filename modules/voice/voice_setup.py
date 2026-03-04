@@ -19,7 +19,7 @@ stream = pa.open(format=pyaudio.paInt16,
                  channels=1, rate=RATE,
                  input=True, frames_per_buffer=CHUNK)
 
-print("\n🎤 Mic test… (3s)")
+print("\nMic test… (3s)")
 start = time.time()
 while time.time() - start < 3:
     data = np.frombuffer(stream.read(CHUNK, exception_on_overflow=False), dtype=np.int16)

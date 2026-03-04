@@ -18,7 +18,7 @@ def record_until_silence(output_path="temp.wav", rate=16000, silence_limit=1.0):
                     input=True,
                     frames_per_buffer=CHUNK)
 
-    print("🎤 말하면 녹음 시작됨... (침묵 1초면 자동 종료)")
+    print("> 말하면 녹음 시작됨... (침묵 1초면 자동 종료)")
 
     frames = []
     silence_chunks = int(silence_limit / 0.02)
@@ -37,7 +37,7 @@ def record_until_silence(output_path="temp.wav", rate=16000, silence_limit=1.0):
             silence_counter = 0
 
         if silence_counter > silence_chunks:
-            print("🛑 말이 멈춰서 녹음 종료됩니다.")
+            print("<> 말이 멈춰서 녹음 종료됩니다.")
             break
 
     stream.stop_stream()

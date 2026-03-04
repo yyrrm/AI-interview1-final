@@ -148,10 +148,10 @@ def gaze_worker():
         # =========================
         if measuring_started and dt > 0 and not tracker.is_blinking:
 
-            # 🔹 전체 측정 시간
+            # - 전체 측정 시간
             total_gaze_time += dt
 
-            # 🔹 정면 유지 시간
+            # - 정면 유지 시간
             if is_center:
                 center_gaze_time += dt
 
@@ -159,7 +159,7 @@ def gaze_worker():
             gx = str(tracker.gaze_direction_x).upper()
             gy = str(tracker.gaze_direction_y).upper()
 
-            # 🔹 이탈 평균시간 계산
+            # - 이탈 평균시간 계산
             if not is_center:
                 # CENTER → OFF (이탈 시작)
                 if not deviation_started:

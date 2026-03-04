@@ -84,8 +84,8 @@ def main():
     start_hands_thread()
     start_voice_thread()
 
-    print("\n🚀 AI Mock Interview — Main Started (q 또는 X로 종료)\n")
-    print("⌨️  키 안내: [c] 시선 보정  |  [n] 다음 질문  |  [q] 종료\n")
+    print("\nAI Mock Interview — Main Started (q 또는 X로 종료)\n")
+    print("키 안내: [c] 시선 보정  |  [n] 다음 질문  |  [q] 종료\n")
 
     latest_pose = None
     latest_gaze = None
@@ -174,14 +174,14 @@ def main():
 
                 try:
                     latest_question = make_question(text)
-                    print("🤖 생성된 질문(자동):", latest_question)
+                    print("생성된 질문(자동):", latest_question)
 
                     last_voice_text = text
                     last_question_time = now
 
                 except Exception as e:
                     latest_question = "(질문 생성 실패)"
-                    print("🔥 질문 생성 오류:", e)
+                    print("질문 생성 오류:", e)
 
         # ===== 질문 표시 =====
         if latest_question:
@@ -201,7 +201,7 @@ def main():
             break
 
         if not printed_start_question:
-            print("🤖 시작 질문:", latest_question)
+            print("시작 질문:", latest_question)
             printed_start_question = True
 
         if cv2.getWindowProperty(window_name, cv2.WND_PROP_VISIBLE) < 1:
@@ -219,21 +219,21 @@ def main():
 
         if ch == "c":
             request_gaze_calibration()
-            print("✅ 'c/C' pressed → Gaze center calibration requested")
+            print("'c/C' pressed → Gaze center calibration requested")
 
         elif ch == "n":
             now = time.time()
             try:
                 base_text = last_voice_text if last_voice_text else ""
                 latest_question = make_question(base_text)
-                print("🆕 (n/N) 다음 질문:", latest_question)
+                print("(n/N) 다음 질문:", latest_question)
                 last_question_time = now
             except Exception as e:
                 latest_question = "(질문 생성 실패)"
-                print("🔥 질문 생성 오류:", e)
+                print("질문 생성 오류:", e)
 
         elif ch == "q":
-            print("🔚 'q/Q' pressed. Exiting.")
+            print("'q/Q' pressed. Exiting.")
             break
 
         time.sleep(0.01)
@@ -242,7 +242,7 @@ def main():
     flags.RUNNING = False
 
     cv2.destroyAllWindows()
-    print("🧹 Threads stopped.")
+    print("Threads stopped.")
 
 
 if __name__ == "__main__":

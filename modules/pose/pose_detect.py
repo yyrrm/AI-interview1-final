@@ -18,7 +18,7 @@ with mp_pose.Pose(
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
-            print("⚠️ 프레임을 읽을 수 없습니다.")
+            print("프레임을 읽을 수 없습니다.")
             break
 
         # 색상 변환 (BGR → RGB)

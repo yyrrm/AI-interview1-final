@@ -76,7 +76,7 @@ def pose_worker():
             result_queue.put(payload)
 
         except Exception as e:
-            print("❌ Pose Thread Error:", e, flush=True)
+            print("Pose Thread Error:", e, flush=True)
             traceback.print_exc()
             time.sleep(0.2)
 
@@ -104,5 +104,5 @@ def pose_worker():
 def start_pose_thread():
     t = threading.Thread(target=pose_worker, daemon=False)
     t.start()
-    print("🚀 pose_thread_example 실행됨!", flush=True)
+    print("pose_thread_example 실행됨!", flush=True)
     return t

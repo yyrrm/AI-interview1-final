@@ -17,7 +17,7 @@ def camera_worker():
     cap.set(cv2.CAP_PROP_FPS, 15)
 
     if not cap.isOpened():
-        print("❌ Camera open failed")
+        print("Camera open failed")
         return
 
     print("Unified Camera Thread Started")
@@ -39,7 +39,7 @@ def camera_worker():
         shared_frame_queue.put(frame)
 
     cap.release()
-    print("📷 Unified Camera Thread Ended")
+    print("Unified Camera Thread Ended")
 
 
 

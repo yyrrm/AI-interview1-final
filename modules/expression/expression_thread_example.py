@@ -186,7 +186,7 @@ def expression_worker(padding=20, analyze_every_n_frames=3):
     last_err = ""
     last_err_time = 0.0
 
-    # ✅ 종료 시 1회 출력용: 최종 점수 저장만 해둠
+    # 종료 시 1회 출력용: 최종 점수 저장만 해둠
     last_au_score_total = None
 
     while flags.RUNNING:
@@ -246,7 +246,7 @@ def expression_worker(padding=20, analyze_every_n_frames=3):
                 msg = str(e)
                 now = time.time()
                 if (msg != last_err) or ((now - last_err_time) > 5.0):
-                    print(f"❌ Expression detect error: {msg}")
+                    print(f"Expression detect error: {msg}")
                     last_err = msg
                     last_err_time = now
 
