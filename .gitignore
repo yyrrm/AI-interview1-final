@@ -19,3 +19,17 @@ key.json
 __pycache__/
 *.pyc
 temp.wav
+.env
+.env
+key.json
+*.pem
+*credentials*
+*service_account*
+__pycache__/
+*.pyc
+.env
+key.json
+*.pem
+*credentials*
+*service_account*
+__pycache__/

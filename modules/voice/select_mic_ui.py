@@ -29,7 +29,7 @@ def select_microphone_ui():
 
     # Tkinter 메인 창 생성
     root = tk.Tk()
-    root.title("🎤 마이크 선택")
+    root.title("마이크 선택")
     root.geometry("420x260")
     root.resizable(False, False)
 

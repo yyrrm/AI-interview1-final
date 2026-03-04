@@ -5,12 +5,12 @@ import threading
 
 import modules.shared_flags as flags
 
-# ✅ 다른 모듈 큐들(이미 존재하는 것들 import)
+# 다른 모듈 큐들(이미 존재하는 것들 import)
 from modules.pose.pose_thread_example import result_queue as pose_result_queue
 from modules.gaze.gaze_thread_example import gaze_result_queue
 from modules.voice.voice_thread_example import voice_result_queue
 
-# ✅ main.py가 읽을 평가 결과 큐
+# main.py가 읽을 평가 결과 큐
 evaluation_result_queue = queue.Queue()
 
 

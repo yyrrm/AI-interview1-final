@@ -7,7 +7,7 @@ import os
 from modules.voice.voice_module import record_until_silence, preprocess_audio
 from modules.voice.stt_google import google_stt
 
-import modules.shared_flags as flags 
+import modules.shared_flags as flags
 
 voice_result_queue = queue.Queue(maxsize=5)
 
@@ -79,6 +79,11 @@ def voice_worker(rate=16000):
                 except:
                     pass
             voice_result_queue.put(result)
+
+            # ===============================
+            # ✅ 녹음 사이 쿨다운 (0.3~0.7초)
+            # ===============================
+            time.sleep(0.5)
 
         except Exception as e:
             print("❌ Voice Thread Error:", e, flush=True)

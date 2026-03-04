@@ -172,7 +172,7 @@ def extract_emotions(fex):
         return None
 
 def expression_worker(padding=20, analyze_every_n_frames=3):
-    print("🙂 Expression Thread Started")
+    print("Expression Thread Started")
 
     frame_idx = 0
     last_result_data = {
@@ -231,7 +231,7 @@ def expression_worker(padding=20, analyze_every_n_frames=3):
 
                             au_scores = calc_live_au_score()
                             if isinstance(au_scores, dict) and "error" not in au_scores:
-                                # ✅ print는 하지 않고, 최종 점수만 저장
+                                # print는 하지 않고, 최종 점수만 저장
                                 last_au_score_total = au_scores.get("total_expression_score")
 
                         result_data = {
@@ -265,15 +265,15 @@ def expression_worker(padding=20, analyze_every_n_frames=3):
 
         safe_put_latest(expression_result_queue, (frame, last_result_data))
 
-    # ✅ RUNNING=False로 루프가 끝난 뒤에만 1회 출력
+    # RUNNING=False로 루프가 끝난 뒤에만 1회 출력
     if last_au_score_total is not None:
         print("최종 AU 점수: ", last_au_score_total)
         print(expression_text_feedback(last_au_score_total))
 
-    print("🙂 Expression Thread Stopped")
+    print("Expression Thread Stopped")
 
 def start_expression_thread(_emotion_detector=None):
     t = threading.Thread(target=expression_worker, daemon=False)
     t.start()
-    print("🚀 expression_thread_example 실행됨! (Camera 공유 버전)")
+    print("expression_thread_example 실행됨! (Camera 공유 버전)")
     return t

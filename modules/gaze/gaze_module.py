@@ -87,7 +87,7 @@ class GazeTracker:
         """
         image.setflags(write=False)
         image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        image_rgb = cv2.flip(image_rgb, 1)
+        #image_rgb = cv2.flip(image_rgb, 1)
         results = self.face_mesh.process(image_rgb)
         image.setflags(write=True)
         image = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2BGR)
@@ -234,6 +234,3 @@ class GazeTracker:
         # 눈 크기 자동 보정
         if self.current_avg_ear > 0.1:
             self.BLINK_THRESHOLD = self.current_avg_ear * 0.6  # 님 코드의 0.6 유지
-
-        print(f"--- Center Calibrated! (X: {self.calibrated_metric_x:.3f}, Y: {self.calibrated_metric_y:.3f}) ---")
-        print(f"--- Blink Threshold Set to: {self.BLINK_THRESHOLD:.3f} ---")

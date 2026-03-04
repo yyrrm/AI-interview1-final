@@ -4,7 +4,7 @@ from google.cloud import speech
 
 def google_stt(audio_path):
 
-    # 🔥 무조건 현재 프로젝트 폴더의 key.json 사용
+    # 무조건 현재 프로젝트 폴더의 key.json 사용
     key_path = os.path.abspath("key.json")
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = key_path
 

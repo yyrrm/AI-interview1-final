@@ -7,7 +7,7 @@ import time
 from modules.gaze.gaze_module import GazeTracker
 import modules.shared_flags as flags
 
-# 🔥 camera_manager에서 공통 프레임 가져오기
+# camera_manager에서 공통 프레임 가져오기
 from modules.camera.camera_manager import shared_frame_queue
 
 # 분석 결과 → main.py
@@ -15,7 +15,7 @@ gaze_result_queue = queue.Queue(maxsize=5)
 
 calibrate_event = threading.Event()  # 보정 요청 이벤트
 
-# ✅ 종료 시 마지막 값 저장용 (원하면 main에서 참조 가능)
+# 종료 시 마지막 값 저장용 (원하면 main에서 참조 가능)
 last_center_ratio = 0.0
 last_center_time = 0.0
 last_total_time = 0.0
@@ -61,10 +61,10 @@ def gaze_worker():
     tracker = GazeTracker()
     print("👁 Gaze Thread Started")
 
-    # ✅ "c키 이후"에만 측정 시작 (원치 않으면 True로 바꾸면 됨)
+    # "c키 이후"에만 측정 시작 (원치 않으면 True로 바꾸면 됨)
     measuring_started = False
 
-    # ✅ 깜빡임 제외 시간 기반 누적
+    # 깜빡임 제외 시간 기반 누적
     total_gaze_time = 0.0
     center_gaze_time = 0.0
 
@@ -74,7 +74,7 @@ def gaze_worker():
     deviation_start_ts = None
     deviation_durations = []
 
-    # ✅ 이탈 방향 시간 누적(깜빡임 제외, measuring_started 이후)
+    # 이탈 방향 시간 누적(깜빡임 제외, measuring_started 이후)
     off_center_time = 0.0
 
     lr_off_time = 0.0
@@ -100,18 +100,18 @@ def gaze_worker():
             except Exception:
                 pass
 
-            # ✅ 전체/정면 누적 리셋
+            # 전체/정면 누적 리셋
             total_gaze_time = 0.0
             center_gaze_time = 0.0
             measuring_started = True
             last_ts = time.perf_counter()
 
-            # ✅ 이탈 구간 리셋
+            # 이탈 구간 리셋
             deviation_started = False
             deviation_start_ts = None
             deviation_durations = []
 
-            # ✅ 이탈 방향 누적 리셋
+            # 이탈 방향 누적 리셋
             off_center_time = 0.0
             lr_off_time = 0.0
             ud_off_time = 0.0
@@ -122,11 +122,10 @@ def gaze_worker():
             down_time = 0.0
 
             calibrate_event.clear()
-            print("🎯 [GAZE] Calibrated & measurement reset/start")
 
         processed = tracker.process_frame(frame)
 
-        # ✅ 시간 누적(프레임 처리 기준)
+        # 시간 누적(프레임 처리 기준)
         now = time.perf_counter()
         dt = now - last_ts
         last_ts = now
@@ -156,7 +155,7 @@ def gaze_worker():
             if is_center:
                 center_gaze_time += dt
 
-            # ✅ 이탈 방향 시간 누적(정면이 아닐 때만)
+            # 이탈 방향 시간 누적(정면이 아닐 때만)
             gx = str(tracker.gaze_direction_x).upper()
             gy = str(tracker.gaze_direction_y).upper()
 
@@ -221,7 +220,7 @@ def gaze_worker():
 
         deviation_count = len(deviation_durations)
 
-        # ✅ 이탈 방향 비율 계산(이탈 시간 기준)
+        # 이탈 방향 비율 계산(이탈 시간 기준)
         if off_center_time > 0:
             lr_ratio = lr_off_time / off_center_time
             ud_ratio = ud_off_time / off_center_time
@@ -257,14 +256,14 @@ def gaze_worker():
             "is_blinking": tracker.is_blinking,
             "ear": tracker.current_avg_ear,
 
-            # ✅ 정면유지비율 + 점수
+            # 정면유지비율 + 점수
             "measuring": measuring_started,
             "center_ratio": center_ratio,
             "center_score": center_score,
             "center_time": center_gaze_time,
             "total_time": total_gaze_time,
 
-            # 🔽 이탈 평균시간 결과
+            # 이탈 평균시간 결과
             "avg_deviation_time": avg_deviation_time,
             "deviation_count": deviation_count,
             "avg_deviation_score": avg_deviation_score,
@@ -272,7 +271,7 @@ def gaze_worker():
 
             "final_gaze_score": final_gaze_score,
 
-            # 🔽 이탈 방향 비율(이탈 시간 기준)
+            # 이탈 방향 비율(이탈 시간 기준)
             "off_center_time": off_center_time,
 
             "lr_ratio": lr_ratio,
@@ -301,7 +300,7 @@ def gaze_worker():
         gaze_result_queue.put((processed, result))
 
     # ============================
-    # 🔚 종료 직전: 진행 중 이탈 마감
+    # 종료 직전: 진행 중 이탈 마감
     # ============================
     if deviation_started and deviation_start_ts is not None:
         dur = time.perf_counter() - deviation_start_ts
@@ -311,7 +310,7 @@ def gaze_worker():
         deviation_start_ts = None
 
     # ============================
-    # 📊 종료 시 이탈 시선 점수 출력
+    # 종료 시 이탈 시선 점수 출력
     # ============================
     final_avg_deviation_time = (
         sum(deviation_durations) / len(deviation_durations)
@@ -321,24 +320,24 @@ def gaze_worker():
     final_max_deviation_time = max(deviation_durations) if deviation_durations else 0.0
     final_avg_deviation_score = score_avg_deviation_time(final_avg_deviation_time)
 
-    if off_center_time > 0:
-        print(
-            f"📌 [GAZE] 이탈 방향 비율: "
-            f"좌우 {lr_off_time / off_center_time * 100:.1f}% / "
-            f"위아래 {ud_off_time / off_center_time * 100:.1f}% / "
-            f"상하좌우 {diag_off_time / off_center_time * 100:.1f}% | "
-            f"좌 {left_time / off_center_time * 100:.1f}% 우 {right_time / off_center_time * 100:.1f}% "
-            f"위 {up_time / off_center_time * 100:.1f}% 아래 {down_time / off_center_time * 100:.1f}%"
-        )
-    else:
-        print("📌 [GAZE] 이탈 방향 비율: 측정된 이탈 없음")
+    #if off_center_time > 0:
+    #    print(
+    #        f"[GAZE] 이탈 방향 비율: "
+    #        f"좌우 {lr_off_time / off_center_time * 100:.1f}% / "
+    #        f"위아래 {ud_off_time / off_center_time * 100:.1f}% / "
+    #        f"상하좌우 {diag_off_time / off_center_time * 100:.1f}% | "
+    #        f"좌 {left_time / off_center_time * 100:.1f}% 우 {right_time / off_center_time * 100:.1f}% "
+    #        f"위 {up_time / off_center_time * 100:.1f}% 아래 {down_time / off_center_time * 100:.1f}%"
+    #    )
+    #else:
+    #    print("[GAZE] 이탈 방향 비율: 측정된 이탈 없음")
 
-    print(
-        f"📌 [GAZE] 이탈 시선 점수: {final_avg_deviation_score}점 "
-        f"(평균 {final_avg_deviation_time:.2f}s / "
-        f"횟수 {final_deviation_count} / "
-        f"최대 {final_max_deviation_time:.2f}s)"
-    )
+    #print(
+    #    f"[GAZE] 이탈 시선 점수: {final_avg_deviation_score}점 "
+    #    f"(평균 {final_avg_deviation_time:.2f}s / "
+    #    f"횟수 {final_deviation_count} / "
+    #    f"최대 {final_max_deviation_time:.2f}s)"
+    #)
 
     # 종료 시 최종 계산
     final_center_ratio = (center_gaze_time / total_gaze_time * 100.0) if total_gaze_time > 0 else 0.0
@@ -353,8 +352,8 @@ def gaze_worker():
     last_total_time = total_gaze_time
 
     # 출력
-    print(f"[GAZE] 정면 응시 점수: {final_center_score}점 (정면 유지 {final_center_ratio:.1f}%)")
-    print(f"[GAZE] 시선 이탈 점수: {final_avg_deviation_score}점 (이탈 복귀 평균 {final_avg_deviation_time:.2f}초)")
+    # print(f"[GAZE] 정면 응시 점수: {final_center_score}점 (정면 유지 {final_center_ratio:.1f}%)")
+    # print(f"[GAZE] 시선 이탈 점수: {final_avg_deviation_score}점 (이탈 복귀 평균 {final_avg_deviation_time:.2f}초)")
     print(f"[GAZE] 최종 시선 종합 점수: {total_final_gaze_score}점")
 
     # 피드백 생성 및 출력
@@ -371,7 +370,7 @@ def gaze_worker():
 def start_gaze_thread():
     t_gaze = threading.Thread(target=gaze_worker, daemon=True)
     t_gaze.start()
-    print("🚀 gaze_thread_example 실행됨! (Camera 공유 버전)")
+    print("gaze_thread_example 실행됨! (Camera 공유 버전)")
     return t_gaze
 
 # ---------------------------------------------------------

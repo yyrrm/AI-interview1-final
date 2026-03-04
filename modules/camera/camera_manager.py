@@ -20,14 +20,14 @@ def camera_worker():
         print("❌ Camera open failed")
         return
 
-    print("📷 Unified Camera Thread Started")
+    print("Unified Camera Thread Started")
 
     while RUN_CAMERA:
         ret, frame = cap.read()
         if not ret:
             continue
 
-        # ✅ 여기에서 한 번만 좌우 반전
+        # 카메라 좌우 반전
         frame = cv2.flip(frame, 1)
 
         if shared_frame_queue.full():

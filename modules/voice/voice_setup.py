@@ -29,4 +29,4 @@ while time.time() - start < 3:
 stream.stop_stream()
 stream.close()
 pa.terminate()
-print("\n✅ Mic OK")
+print("\nMic OK")

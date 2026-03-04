@@ -5,7 +5,7 @@ import numpy as np
 import time
 
 # ======================================
-# 🎤 1) 말하면 녹음 시작 → 무음이면 종료
+# 1) 말하면 녹음 시작 → 무음이면 종료
 # ======================================
 def record_until_silence(output_path="temp.wav", rate=16000, silence_limit=1.2):
 
@@ -17,7 +17,7 @@ def record_until_silence(output_path="temp.wav", rate=16000, silence_limit=1.2):
 
     print("🎤 말하면 녹음 시작...")
 
-    # ⭐ device_index 없음 → Windows 기본 마이크 사용
+    # device_index 없음 → Windows 기본 마이크 사용
     stream = p.open(
         format=FORMAT,
         channels=CHANNELS,
@@ -37,7 +37,7 @@ def record_until_silence(output_path="temp.wav", rate=16000, silence_limit=1.2):
         audio = np.frombuffer(data, dtype=np.int16)
         vol = np.abs(audio).mean()
 
-        # 🔥 목소리 감지
+        # 목소리 감지
         if vol > 200:
             triggered = True
             silence_start = None
@@ -45,7 +45,7 @@ def record_until_silence(output_path="temp.wav", rate=16000, silence_limit=1.2):
             if triggered and silence_start is None:
                 silence_start = time.time()
 
-        # 🔥 말 멈춤 감지
+        # 말 멈춤 감지
         if triggered and silence_start and time.time() - silence_start > silence_limit:
             print("🛑 말 멈춤 감지 → 녹음 종료")
             break
@@ -66,7 +66,7 @@ def record_until_silence(output_path="temp.wav", rate=16000, silence_limit=1.2):
 
 
 # ======================================
-# 🔧 2) preprocess_audio — 최소 버전
+# 2) preprocess_audio — 최소 버전
 # (STT 입력을 위해 존재만 하게 함)
 # ======================================
 def preprocess_audio(audio_path, rate=16000):
