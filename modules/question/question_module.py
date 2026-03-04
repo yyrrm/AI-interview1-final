@@ -8,7 +8,7 @@ load_dotenv()
 # OpenAI 클라이언트 생성
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def make_question(answer_text, topic="자기소개 면접"):
+def make_question(answer_text, topic="면접"):
     prompt = f"""
 너는 실제 기업 면접에서 사용되는 질문을 생성하는 전문 면접관 AI이다. 목표는 지원자의 역량을 폭넓게 확인하는 것이다.
 
