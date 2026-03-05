@@ -59,7 +59,7 @@ def gaze_worker():
     global last_center_ratio, last_center_time, last_total_time
 
     tracker = GazeTracker()
-    print("👁 Gaze Thread Started")
+    print("Gaze Thread Started")
 
     # "c키 이후"에만 측정 시작 (원치 않으면 True로 바꾸면 됨)
     measuring_started = False
@@ -148,10 +148,10 @@ def gaze_worker():
         # =========================
         if measuring_started and dt > 0 and not tracker.is_blinking:
 
-            # 🔹 전체 측정 시간
+            # - 전체 측정 시간
             total_gaze_time += dt
 
-            # 🔹 정면 유지 시간
+            # - 정면 유지 시간
             if is_center:
                 center_gaze_time += dt
 
@@ -159,7 +159,7 @@ def gaze_worker():
             gx = str(tracker.gaze_direction_x).upper()
             gy = str(tracker.gaze_direction_y).upper()
 
-            # 🔹 이탈 평균시간 계산
+            # - 이탈 평균시간 계산
             if not is_center:
                 # CENTER → OFF (이탈 시작)
                 if not deviation_started:
@@ -354,6 +354,8 @@ def gaze_worker():
     # 출력
     # print(f"[GAZE] 정면 응시 점수: {final_center_score}점 (정면 유지 {final_center_ratio:.1f}%)")
     # print(f"[GAZE] 시선 이탈 점수: {final_avg_deviation_score}점 (이탈 복귀 평균 {final_avg_deviation_time:.2f}초)")
+    print("================================================")
+    print("- 시선 분야 평가 결과 -")
     print(f"[GAZE] 최종 시선 종합 점수: {total_final_gaze_score}점")
 
     # 피드백 생성 및 출력
@@ -390,7 +392,7 @@ def generate_gaze_feedback(total_score, center_ratio, avg_dev_time,
 
     # 2. 이탈 시간 피드백
     if avg_dev_time > 2.0:
-        feedbacks.append("- 딴 곳을 응시하는 시간이 다소 깁니다. 답변이 막히더라도 시선을 빨리 정면으로 회복해 보세요.")
+        feedbacks.append("다른 곳을 응시하는 시간이 다소 깁니다. 답변이 막히더라도 시선을 빨리 정면으로 회복해 보세요.")
 
     # 3. 습관 분석 (어느 방향을 많이 보는지)
     if off_time > 0:

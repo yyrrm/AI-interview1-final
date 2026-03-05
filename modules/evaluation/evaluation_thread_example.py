@@ -26,7 +26,7 @@ def clamp(x, lo, hi):
 
 
 def evaluation_loop():
-    print("✅ evaluation thread started", flush=True)
+    print("Evaluation thread started", flush=True)
 
     # 최신값 캐시
     latest_pose = None
@@ -120,7 +120,7 @@ def evaluation_loop():
             n += 1
             avg_score = total_score / n
 
-            # ✅ main.py로 보내는 값(dict 형태 유지)
+            # main.py로 보내는 값(dict 형태 유지)
             evaluation_result_queue.put({
                 "score": int(round(score)),
                 "comment": comment,

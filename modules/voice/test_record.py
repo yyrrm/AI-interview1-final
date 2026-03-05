@@ -15,7 +15,7 @@ stream = p.open(
     frames_per_buffer=CHUNK
 )
 
-print("🎤 3초간 녹음합니다...")
+print("3초간 녹음합니다...")
 
 frames = []
 for _ in range(int(rate / CHUNK * 3)):

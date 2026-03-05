@@ -15,7 +15,7 @@ mp_draw = mp.solutions.drawing_utils
 
 
 # ======================================================
-# ✋ Hands 분석 스레드
+# Hands 분석 스레드
 # ======================================================
 def hands_worker():
     hands = mp_hands.Hands(
@@ -25,7 +25,7 @@ def hands_worker():
         min_tracking_confidence=0.5,
     )
 
-    print("✋ Hands Thread Started")
+    print("Hands Thread Started")
 
     while RUNNING:
 
@@ -33,7 +33,7 @@ def hands_worker():
         if shared_frame_queue.empty():
             continue
 
-        # 📌 공통 카메라 프레임 가져오기
+        # 공통 카메라 프레임 가져오기
         frame = shared_frame_queue.get()
 
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -54,22 +54,22 @@ def hands_worker():
 
         hands_result_queue.put(frame)
 
-    print("✋ Hands Thread Stopped")
+    print("Hands Thread Stopped")
 
 
 # ======================================================
-# ▶️ 스레드 시작 함수
+# 스레드 시작 함수
 # ======================================================
 def start_hands_thread():
     t_hands = threading.Thread(target=hands_worker, daemon=True)
     t_hands.start()
 
-    print("🚀 hands_thread_example 실행됨! (Camera 공유 버전)")
+    print("hands_thread_example 실행됨! (Camera 공유 버전)")
     return t_hands
 
 
 # ======================================================
-# 🔍 단독 테스트용 코드 (원하면 사용)
+# 단독 테스트용 코드 (원하면 사용)
 # ======================================================
 if __name__ == "__main__":
     from modules.camera.camera_manager import start_camera_thread

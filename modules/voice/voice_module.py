@@ -15,7 +15,7 @@ def record_until_silence(output_path="temp.wav", rate=16000, silence_limit=1.2):
 
     p = pyaudio.PyAudio()
 
-    print("🎤 말하면 녹음 시작...")
+    print("> 말하면 녹음 시작...")
 
     # device_index 없음 → Windows 기본 마이크 사용
     stream = p.open(
@@ -47,7 +47,7 @@ def record_until_silence(output_path="temp.wav", rate=16000, silence_limit=1.2):
 
         # 말 멈춤 감지
         if triggered and silence_start and time.time() - silence_start > silence_limit:
-            print("🛑 말 멈춤 감지 → 녹음 종료")
+            print("> 말 멈춤 감지 → 녹음 종료")
             break
 
     stream.stop_stream()

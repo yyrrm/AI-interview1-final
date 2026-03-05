@@ -18,10 +18,10 @@ motion_threshold = 20  # 좌표 이동량 기준 (조정 가능)
 
 cap = cv2.VideoCapture(0)
 if not cap.isOpened():
-    print("❌ 카메라를 찾을 수 없습니다.")
+    print("카메라를 찾을 수 없습니다.")
     exit()
 
-print("📹 실시간 자세 분석 시작 (종료: Q 키)")
+print("실시간 자세 분석 시작 (종료: Q 키)")
 
 while True:
     ret, frame = cap.read()
